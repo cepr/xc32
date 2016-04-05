@@ -24,6 +24,8 @@ You should have received a copy of the GNU General Public License
 along with GCC; see the file COPYING3.  If not see
 <http://www.gnu.org/licenses/>.  */
 
+#define SKIP_LICENSE_MANAGER
+
 #ifndef TARGET_IS_PIC32MX 
 #define TARGET_IS_PIC32MX 
 #endif
