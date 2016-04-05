@@ -68,5 +68,8 @@ $ROOT/gcc/configure \
 --enable-poison-system-directories
 make -k || true #gcc/cc1.exe gcc/cc1plus.exe gcc/lto1.exe
 cp gcc/cc1.exe gcc/cc1plus.exe gcc/lto1.exe $BUILD
+i586-mingw32msvc-strip $BUILD/cc1.exe 
+i586-mingw32msvc-strip $BUILD/cc1plus.exe 
+i586-mingw32msvc-strip $BUILD/lto1.exe 
 popd
 
