@@ -78,9 +78,9 @@ along with GCC; see the file COPYING3.  If not see
 #include "c/c-tree.h"
 #include "config/mips/mips-machine-function.h"
 
-#define MCHP_DONT_DEFINE_RESOURCES
-#include "../../../../c30_resource/src/xc32/resource_info.h"
-#undef MCHP_DONT_DEFINE_RESOURCES
+//#define MCHP_DONT_DEFINE_RESOURCES
+//#include "../../../../c30_resource/src/xc32/resource_info.h"
+//#undef MCHP_DONT_DEFINE_RESOURCES
  
 #ifdef __MINGW32__
 void *alloca(size_t);

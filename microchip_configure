@@ -1,0 +1,72 @@
+#!/bin/bash -e
+
+HOST=i586-mingw32msvc
+ROOT=`pwd`
+
+# Create build folders
+BUILD=$ROOT/build-$HOST
+rm -rf $BUILD
+mkdir -p $BUILD
+
+# Create sysroot folder
+SYSROOT=$BUILD/sysroot
+mkdir -p $SYSROOT
+
+# Compile and install gmp into sysroot
+mkdir -p $BUILD/gmp
+pushd $BUILD/gmp
+$ROOT/gmp/configure \
+--host=$HOST \
+--prefix=$SYSROOT
+make
+make install
+popd
+
+# Compile and install gcc into sysroot
+mkdir -p $BUILD/gcc
+pushd $BUILD/gcc
+$ROOT/gcc/configure \
+--host=$HOST \
+--prefix=$SYSROOT \
+--disable-shared \
+--with-libelf=$SYSROOT \
+--with-gmp=$SYSROOT \
+--without-isl \
+--without-cloog \
+--target=pic32mx \
+--program-prefix=xc32- \
+--with-bugurl=http://www.microchip.com/support \
+--with-dwarf2 \
+--with-newlib \
+--with-gnu-as \
+--with-gnu-ld \
+--enable-cxx-flags=-mno-smart-io \
+--enable-lto \
+--enable-fixed-point \
+--enable-gofast \
+--enable-languages=c,c++ \
+--enable-sgxx-sde-multilibs \
+--enable-sjlj-exceptions \
+--enable-obsolete \
+--disable-hosted-libstdcxx \
+--disable-libstdcxx-pch \
+--disable-libssp \
+--disable-libmudflap \
+--disable-libffi \
+--disable-libfortran \
+--disable-bootstrap \
+--disable-shared \
+--disable-__cxa_atexit \
+--disable-nls \
+--disable-libgomp \
+--disable-threads \
+--disable-sim \
+--disable-decimal-float \
+--disable-libquadmath \
+--without-headers 'XGCC_FLAGS_FOR_TARGET=-frtti -fexceptions -fno-enforce-eh-specs -mno-smart-io' \
+--disable-checking \
+--enable-poison-system-directories
+make -k || true #gcc/cc1.exe gcc/cc1plus.exe gcc/lto1.exe
+cp gcc/cc1.exe gcc/cc1plus.exe gcc/lto1.exe $BUILD
+popd
+

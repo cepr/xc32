@@ -18923,7 +18923,9 @@ mips_option_override (void)
 #endif
 
 #if !(defined(MD_HAVE_COMPACT_EH) && defined(HAVE_GAS_EH_FRAME_ENTRY))
-  TARGET_COMPACT_EH = 0;
+  #if TARGET_COMPACT_EH
+    error ("gcc internal error @ mips.c:18927");
+  #endif
 #endif
 
   /* MIPS16 and microMIPS cannot coexist.  */
